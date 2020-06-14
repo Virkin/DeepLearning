@@ -31,8 +31,13 @@ class CustomWindow(Window):
         # self.window.setLayout(self.mainHBoxLayout)
         self.setLayout(self.mainHBoxLayout)
 
-        self.car = GraphicCar(10, 50, self.canvas)
-        self.car.graphic_a = 0
+        self.one = False
+        if self.one:
+            self.car = GraphicCar(10, 50, self.canvas)
+        else:
+            self.cars = [GraphicCar(10, 50, self.canvas), GraphicCar(
+                10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas)]
+
         self.draw()
 
     def setMovingZone(self):
@@ -46,7 +51,11 @@ class CustomWindow(Window):
         self.setMap()
 
     def draw(self):
-        self.car.draw(painter=self.getPainter())
+        if self.one:
+            self.car.draw(painter=self.getPainter())
+        else:
+            for car in self.cars:
+                car.draw(painter=self.getPainter())
 
     def update(self):
         pass
@@ -55,28 +64,46 @@ class CustomWindow(Window):
         return QPainter(self.canvas.pixmap())
 
     def testButtonClicked(self):
-        for angle in range(0, 361):
-            self.car.graphic_a = angle
+        for angle in range(0, 360):
+            if self.one:
+                self.car.graphic_a = angle
+            else:
+                for car in self.cars:
+                    car.graphic_a = angle
             self.updateCanvas()
             time.sleep(0.01)
 
     def keyPressEvent(self, event):
         if event.key() == Qt.Key_Z:
-            self.car.moveUp()
-            self.updateCanvas()
+            if self.one:
+                self.car.moveUp()
+            else:
+                for car in self.cars:
+                    car.moveUp()
         if event.key() == Qt.Key_Q:
-            self.car.moveLeft()
-            self.updateCanvas()
+            if self.one:
+                self.car.moveLeft()
+            else:
+                for car in self.cars:
+                    car.moveLeft()
         if event.key() == Qt.Key_S:
-            self.car.moveDown()
-            self.updateCanvas()
+            if self.one:
+                self.car.moveDown()
+            else:
+                for car in self.cars:
+                    car.moveDown()
         if event.key() == Qt.Key_D:
-            self.car.moveRight()
-            self.updateCanvas()
+            if self.one:
+                self.car.moveRight()
+            else:
+                for car in self.cars:
+                    car.moveRight()
+        self.updateCanvas()
 
     def updateCanvas(self):
         self.setMap()
         self.draw()
+        self.setMap()
         self.canvas.repaint()
 
     def setMap(self):
@@ -84,3 +111,9 @@ class CustomWindow(Window):
         h = 10
         RotateRect.create(x=20 + w/2, y=20 + h/2,
                           w=w, h=h, painter=self.getPainter(), color=QColor('black'))
+        RotateRect.create(x=20 + w/2, y=600 + h/2,
+                          w=w, h=h, painter=self.getPainter(), color=QColor('black'))
+        RotateRect.create(x=20, y=300 + h/2,
+                          w=w, h=h, painter=self.getPainter(), color=QColor('black'), a=90)
+        RotateRect.create(x=500 + w/2, y=300 + h/2,
+                          w=w, h=h, painter=self.getPainter(), color=QColor('black'), a=90)

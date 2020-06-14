@@ -131,7 +131,7 @@ class RotateRect(object):
         if debug == True:
             pen.setWidth(5)
             if color != QColor('white'):
-                pen.setColor(QColor('black'))
+                pen.setColor(QColor('dark blue'))
             painter.setPen(pen)
 
             painter.drawPoint(self.cx, self.cy)
