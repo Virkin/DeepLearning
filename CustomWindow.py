@@ -32,11 +32,13 @@ class CustomWindow(Window):
         self.setLayout(self.mainHBoxLayout)
 
         self.one = False
+        carW = 5
+        carH = 15
         if self.one:
-            self.car = GraphicCar(10, 50, self.canvas)
+            self.car = GraphicCar(carW, carH, self.canvas)
         else:
-            self.cars = [GraphicCar(10, 50, self.canvas), GraphicCar(
-                10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas), GraphicCar(10, 50, self.canvas)]
+            self.cars = [GraphicCar(carW, carH, self.canvas), GraphicCar(
+                carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas)]
 
         self.draw()
 
@@ -64,7 +66,7 @@ class CustomWindow(Window):
         return QPainter(self.canvas.pixmap())
 
     def testButtonClicked(self):
-        for angle in range(0, 360):
+        for angle in range(0, 361):
             if self.one:
                 self.car.graphic_a = angle
             else:

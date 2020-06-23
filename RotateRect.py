@@ -23,6 +23,7 @@ class RotateRect(object):
     def create(painter, x, y, w, h, a=0, color=QColor('black'), rx='', ry='', debug=False):
         rr = RotateRect(x, y, w, h, a, rx, ry)
         rr.draw(painter, color, debug=debug)
+        return rr
     create = staticmethod(create)
 
     def computeCorners(self, rx='', ry=''):

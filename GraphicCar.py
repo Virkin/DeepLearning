@@ -1,6 +1,7 @@
 from PyQt5.QtGui import QColor, QPainter, QPen
 
 from RotateRect import RotateRect
+from Sensor import GraphicSensor
 
 
 class GraphicCar(object):
@@ -30,6 +31,20 @@ class GraphicCar(object):
         RotateRect.create(x=x, y=y,
                           w=w, h=h, a=0+a, painter=painter, color=color, debug=False)
 
+        sensorWidth = 4
+        gs1 = GraphicSensor.create(sensorWidth, x, y - h/2 +
+                                   sensorWidth/2, x, y, a, 0-90, painter, frontColor, True)
+
+        gs3 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
+                                   sensorWidth/2, x, y, a, 45-90, painter, frontColor)
+        gs5 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
+                                   sensorWidth*1.5, x, y, a, 90-90, painter, frontColor)
+
+        gs2 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
+                                   sensorWidth/2, x, y, a, -45-90, painter, frontColor)
+        gs4 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
+                                   sensorWidth*1.5, x, y, a, -90-90, painter, frontColor)
+
         # RotateRect.create(x=x, y=y-h/2+5, a=a,
         #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
 
@@ -47,6 +62,7 @@ class GraphicCar(object):
     def draw(self, painter, color=QColor('red')):
         self._drawCar(x=self.graphic_lastX, y=self.graphic_lastY,
                       w=self.graphic_lastW, h=self.graphic_lastH, a=self.graphic_lastA, painter=painter, color=QColor('white'), frontColor=QColor('white'))
+        print("")
         self._drawCar(x=self.graphic_x, y=self.graphic_y,
                       w=self.graphic_w, h=self.graphic_h, a=self.graphic_a, painter=painter, color=color, frontColor=QColor('blue'))
         painter.end()
