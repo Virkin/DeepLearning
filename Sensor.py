@@ -69,7 +69,7 @@ class GraphicSensor(Sensor):
         y1 = y0
 
         if not self.vert:
-            x1, y1 = self._getY(x0, d)
+            x1, y1 = self._getY(x0, d, self.a)
             print("1")
         else:
             x1 = x0
@@ -131,15 +131,21 @@ class GraphicSensor(Sensor):
 
         return
 
-    def _getY(self, x, d):
+    def _getY(self, x, d, a):
         self.update()
 
         i = x
         y0 = self.coeff * x + self.b
         y = y0
 
+        print("angle: {}".format(a))
+
         while dist((x, y0), (i, y)) < d:
             y = self.coeff * i + self.b
-            i = i + 1
+
+            if a < 180:
+                i += 1
+            else:
+                i -= 1
 
         return i, y
