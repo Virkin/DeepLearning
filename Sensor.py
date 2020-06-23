@@ -61,35 +61,30 @@ class GraphicSensor(Sensor):
         if not self.debug:
             return
 
-        d = 10
+        d = 100
 
         x0 = self.graphX
         y0 = self.graphY
         x1 = x0
         y1 = y0
 
+        self.update()
+
+        lim = 90-self.virtualA
+
         if not self.vert:
-            x1, y1 = self._getY(x0, d, self.a)
+            x1, y1 = self._getY(x0, d, self.a % 360, lim)
         else:
             x1 = x0
-            y1 = y0-d
-            print("2")
-
-        print("Angle ({}+{}) : {}/{} -> {}/{}".format(self.virtualA,
-                                                      self.a, x0, y0, x1, y1))
-        #painter.drawLine(x0, y0, x1, y1)
+            y1 = y0-d if self.a % 360 < lim or self.a % 360 >= lim+180 else y0+d
 
         lastPen = painter.pen()
 
         pen = QPen()
-        pen.setWidth(4)
+        pen.setWidth(1)
         pen.setColor(QColor("green"))
         painter.setPen(pen)
-
-        # x1 = self.tx
-        # y1 = self.ty
-        painter.drawPoint(x0, y0)
-        painter.drawPoint(x1, y1)
+        painter.drawLine(x0, y0, x1, y1)
 
         painter.setPen(lastPen)
 
@@ -130,19 +125,27 @@ class GraphicSensor(Sensor):
 
         return
 
-    def _getY(self, x, d, a):
-        self.update()
-
+    def _getY(self, x, d, a, lim):
         i = x
         y0 = self.coeff * x + self.b
         y = y0
+        step = 0.1
+
+        additive = False
+
+        if self.virtualA <= 0:
+            if a <= lim or a > lim+180:
+                additive = True
+        else:
+            if a > lim+180 and a <= lim+180+180:
+                additive = True
 
         while dist((x, y0), (i, y)) < d:
             y = self.coeff * i + self.b
 
-            if a <= 180:
-                i += 1
+            if additive:
+                i += step
             else:
-                i -= 1
+                i -= step
 
         return i, y

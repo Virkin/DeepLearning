@@ -33,17 +33,17 @@ class GraphicCar(object):
 
         sensorWidth = 4
         gs1 = GraphicSensor.create(sensorWidth, x, y - h/2 +
-                                   sensorWidth/2, x, y, a, 0-90, painter, frontColor, True)
+                                   sensorWidth/2, x, y, a, -90, painter, frontColor, True)
 
         gs3 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
-                                   sensorWidth/2, x, y, a, 45-90, painter, frontColor)
+                                   sensorWidth/2, x, y, a, -45, painter, frontColor, True)
         gs5 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
-                                   sensorWidth*1.5, x, y, a, 90-90, painter, frontColor)
+                                   sensorWidth*1.5, x, y, a, 0, painter, frontColor, True)
 
         gs2 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
-                                   sensorWidth/2, x, y, a, -45-90, painter, frontColor)
+                                   sensorWidth/2, x, y, a, 225, painter, frontColor, True)
         gs4 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
-                                   sensorWidth*1.5, x, y, a, -90-90, painter, frontColor)
+                                   sensorWidth*1.5, x, y, a, 180, painter, frontColor, True)
 
         # RotateRect.create(x=x, y=y-h/2+5, a=a,
         #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
@@ -62,7 +62,6 @@ class GraphicCar(object):
     def draw(self, painter, color=QColor('red')):
         self._drawCar(x=self.graphic_lastX, y=self.graphic_lastY,
                       w=self.graphic_lastW, h=self.graphic_lastH, a=self.graphic_lastA, painter=painter, color=QColor('white'), frontColor=QColor('white'))
-        print("")
         self._drawCar(x=self.graphic_x, y=self.graphic_y,
                       w=self.graphic_w, h=self.graphic_h, a=self.graphic_a, painter=painter, color=color, frontColor=QColor('blue'))
         painter.end()

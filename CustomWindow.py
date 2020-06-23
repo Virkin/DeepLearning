@@ -31,6 +31,8 @@ class CustomWindow(Window):
         # self.window.setLayout(self.mainHBoxLayout)
         self.setLayout(self.mainHBoxLayout)
 
+        self.testAngle = 0
+
         self.one = True
         carW = 5
         carH = 15
@@ -100,6 +102,17 @@ class CustomWindow(Window):
             else:
                 for car in self.cars:
                     car.moveRight()
+        if event.key() == Qt.Key_A:
+            self.testAngle += 1
+            if self.testAngle > 360:
+                self.testAngle = 0
+
+            if self.one:
+                self.car.graphic_a = self.testAngle
+            else:
+                for car in self.cars:
+                    car.graphic_a = self.testAngle
+            self.updateCanvas()
         self.updateCanvas()
 
     def updateCanvas(self):
