@@ -69,8 +69,7 @@ class GraphicSensor(Sensor):
         y1 = y0
 
         if not self.vert:
-            x1 = x0+d
-            y1 = self._getY(x1, d)
+            x1, y1 = self._getY(x0, d)
             print("1")
         else:
             x1 = x0
@@ -88,8 +87,8 @@ class GraphicSensor(Sensor):
         pen.setColor(QColor("green"))
         painter.setPen(pen)
 
-        x1 = self.tx
-        y1 = self.ty
+        # x1 = self.tx
+        # y1 = self.ty
         painter.drawPoint(x0, y0)
         painter.drawPoint(x1, y1)
 
@@ -143,4 +142,4 @@ class GraphicSensor(Sensor):
             y = self.coeff * i + self.b
             i = i + 1
 
-        return y
+        return i, y

@@ -31,7 +31,7 @@ class CustomWindow(Window):
         # self.window.setLayout(self.mainHBoxLayout)
         self.setLayout(self.mainHBoxLayout)
 
-        self.one = False
+        self.one = True
         carW = 5
         carH = 15
         if self.one:
