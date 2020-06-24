@@ -1,4 +1,4 @@
-from GraphicCar import GraphicCar
+from Car import Car
 from Window import Window
 
 import sys
@@ -9,6 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from RotateRect import *
 
+nbCar = 1
 
 class CustomWindow(Window):
     def __init__(self, title, x, y, width, height):
@@ -33,15 +34,15 @@ class CustomWindow(Window):
 
         self.testAngle = 0
 
-        self.one = True
+        self.one = False
         carW = 5
         carH = 15
-        if self.one:
-            self.car = GraphicCar(carW, carH, self.canvas, 75, 60)
-            self.car.graphic_a = 180
-        else:
-            self.cars = [GraphicCar(carW, carH, self.canvas), GraphicCar(
-                carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas)]
+
+        self.cars = []
+
+        for i in range(nbCar) :
+            self.cars.append(Car(carW, carH, self.canvas, 75, 60))
+            self.cars[i].graph.graphic_a = 180
 
         self.draw()
 
@@ -56,11 +57,8 @@ class CustomWindow(Window):
         self.setMap()
 
     def draw(self):
-        if self.one:
-            self.car.draw(painter=self.getPainter())
-        else:
-            for car in self.cars:
-                car.draw(painter=self.getPainter())
+        for car in self.cars:
+            car.graph.draw(painter=self.getPainter())
 
     def update(self):
         return
@@ -70,27 +68,20 @@ class CustomWindow(Window):
 
     def testButtonClicked(self):
         for angle in range(0, 361):
-            if self.one:
-                self.car.graphic_a = angle
-            else:
-                for car in self.cars:
-                    car.graphic_a = angle
+
+            for car in self.cars:
+                car.graph.graphic_a = angle
+
             self.updateCanvas()
             time.sleep(0.01)
 
-    def keyPressEvent(self, event):
+    """def keyPressEvent(self, event):
         if event.key() == Qt.Key_Z:
-            if self.one:
-                self.car.moveUp()
-            else:
-                for car in self.cars:
-                    car.moveUp()
+            for car in self.cars:
+                car.graph.moveUp()
         if event.key() == Qt.Key_Q:
-            if self.one:
-                self.car.moveLeft()
-            else:
-                for car in self.cars:
-                    car.moveLeft()
+            for car in self.cars:
+                car.graph.moveLeft()
         if event.key() == Qt.Key_S:
             if self.one:
                 self.car.moveDown()
@@ -114,7 +105,7 @@ class CustomWindow(Window):
                 for car in self.cars:
                     car.graphic_a = self.testAngle
             self.updateCanvas()
-        self.updateCanvas()
+        self.updateCanvas()"""
 
     def updateCanvas(self):
         self.setMap()

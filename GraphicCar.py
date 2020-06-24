@@ -3,7 +3,6 @@ from PyQt5.QtGui import QColor, QPainter, QPen
 from RotateRect import RotateRect
 from Sensor import GraphicSensor
 
-
 class GraphicCar(object):
     def __init__(self, baseWidth, baseHeight, canvas, x=400, y=300):
         self.graphic_x = x
