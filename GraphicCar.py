@@ -32,31 +32,21 @@ class GraphicCar(object):
                           w=w, h=h, a=0+a, painter=painter, color=color, debug=False)
 
         sensorWidth = 4
-        gs1 = GraphicSensor.create(sensorWidth, x, y - h/2 +
-                                   sensorWidth/2, x, y, a, -90, painter, frontColor, True)
+        gs3 = GraphicSensor.create(sensorWidth, x, y - h/2 +
+                                   sensorWidth/2, x, y, a, -90, painter, self.canvas, frontColor)
 
-        gs3 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
-                                   sensorWidth/2, x, y, a, -45, painter, frontColor, True)
+        gs4 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
+                                   sensorWidth/2, x, y, a, -45, painter, self.canvas, frontColor)
         gs5 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
-                                   sensorWidth*1.5, x, y, a, 0, painter, frontColor, True)
+                                   sensorWidth*1.5, x, y, a, 0, painter, self.canvas, frontColor)
 
         gs2 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
-                                   sensorWidth/2, x, y, a, 225, painter, frontColor, True)
-        gs4 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
-                                   sensorWidth*1.5, x, y, a, 180, painter, frontColor, True)
+                                   sensorWidth/2, x, y, a, 225, painter, self.canvas, frontColor)
+        gs1 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
+                                   sensorWidth*1.5, x, y, a, 180, painter, self.canvas, frontColor)
 
-        # RotateRect.create(x=x, y=y-h/2+5, a=a,
-        #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
-
-        # RotateRect.create(x=x-w/2+5, y=y-h/2+5, a=a,
-        #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
-        # RotateRect.create(x=x+w/2-5, y=y-h/2+5, a=a,
-        #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
-
-        # RotateRect.create(x=x-w/2+5, y=y-h/2+15, a=a,
-        #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
-        # RotateRect.create(x=x+w/2-5, y=y-h/2+15, a=a,
-        #                   painter=painter, color=frontColor, w=10, h=10, rx=x, ry=y)
+        print("{}.{}.{}.{}.{}".format(gs1.Dist(), gs2.Dist(),
+                                      gs3.Dist(), gs4.Dist(), gs5.Dist()))
         return
 
     def draw(self, painter, color=QColor('red')):
@@ -125,7 +115,6 @@ class GraphicCar(object):
         for x in range(startX, endX+1):
             for y in range(startY, endY+1):
                 pixel = img.pixel(x, y)
-                color = QColor(pixel).getRgbF()
                 if QColor(pixel) == QColor('black'):
                     return True
 
