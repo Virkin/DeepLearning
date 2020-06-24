@@ -45,7 +45,7 @@ class GraphicCar(object):
         gs1 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
                                    sensorWidth*1.5, x, y, a, 180, painter, self.canvas, frontColor)
 
-        print("{}.{}.{}.{}.{}".format(gs1.Dist(), gs2.Dist(),
+        print("{}|{}|{}|{}|{}".format(gs1.Dist(), gs2.Dist(),
                                       gs3.Dist(), gs4.Dist(), gs5.Dist()))
         return
 

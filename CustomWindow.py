@@ -37,7 +37,8 @@ class CustomWindow(Window):
         carW = 5
         carH = 15
         if self.one:
-            self.car = GraphicCar(carW, carH, self.canvas)
+            self.car = GraphicCar(carW, carH, self.canvas, 75, 60)
+            self.car.graphic_a = 180
         else:
             self.cars = [GraphicCar(carW, carH, self.canvas), GraphicCar(
                 carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas), GraphicCar(carW, carH, self.canvas)]
@@ -62,7 +63,7 @@ class CustomWindow(Window):
                 car.draw(painter=self.getPainter())
 
     def update(self):
-        pass
+        return
 
     def getPainter(self):
         return QPainter(self.canvas.pixmap())
@@ -121,14 +122,62 @@ class CustomWindow(Window):
         self.setMap()
         self.canvas.repaint()
 
+    def setHWall(self, painter, x, y, w, h, a=0):
+        RotateRect.create(x=x + w/2, y=y + h/2,
+                          w=w, h=h, painter=painter, color=QColor('black'), a=0+a)
+
+    def setVWall(self, painter, x, y, w, h, a=0):
+        RotateRect.create(x=x + h/2, y=y + w/2,
+                          w=w, h=h, painter=painter, color=QColor('black'), a=90+a)
+
     def setMap(self):
-        w = 700
-        h = 10
-        RotateRect.create(x=20 + w/2, y=20 + h/2,
-                          w=w, h=h, painter=self.getPainter(), color=QColor('black'))
-        RotateRect.create(x=20 + w/2, y=600 + h/2,
-                          w=w, h=h, painter=self.getPainter(), color=QColor('black'))
-        RotateRect.create(x=20, y=300 + h/2,
-                          w=w, h=h, painter=self.getPainter(), color=QColor('black'), a=90)
-        RotateRect.create(x=500 + w/2, y=300 + h/2,
-                          w=w, h=h, painter=self.getPainter(), color=QColor('black'), a=90)
+        wmax = self.width() * 0.85
+        hmax = self.height()
+        thickness = 10
+        painter = self.getPainter()
+
+        self.setHWall(painter, 0, 0, wmax, thickness)
+        self.setHWall(painter, 0, hmax - thickness, wmax, thickness)
+        self.setVWall(painter, 0, 0, hmax, thickness)
+        self.setVWall(painter, wmax - thickness, 0, hmax, thickness)
+
+        w = 150
+        h = thickness
+        self.setVWall(painter, w, h, 100, thickness)
+        w -= 5
+        h += 90
+        self.setVWall(painter, w, h, 100, thickness, 10)
+        w -= 25
+        h += 90
+        self.setVWall(painter, w, h, 200, thickness, 10)
+        w -= 20
+        h += 195
+        self.setVWall(painter, w, h, 200, thickness)
+        h += 220
+        self.setHWall(painter, w, h, 200, thickness, 15)
+
+        w += 190
+        h -= 460
+        self.setVWall(painter, w, h, 500, thickness, 2)
+        w += 20
+        h -= 180
+        self.setVWall(painter, w, h, 200, thickness, 10)
+
+        self.setHWall(painter, w+100, h+40, 100, thickness, 10)
+        self.setHWall(painter, w+100, h+150, 100, thickness, -10)
+
+        w += 100
+        h += 160
+        self.setVWall(painter, w, h, 600, thickness, -2)
+
+        w += 90
+        h -= 85
+        self.setHWall(painter, w, h, 200, thickness, 15)
+        self.setHWall(painter, w, h+90, 200, thickness, 15)
+
+        w += 180
+        h += 80
+        self.setHWall(painter, w, h, 250, thickness, 25)
+        self.setHWall(painter, w, h+90, 250, thickness, 25)
+
+        painter.end()
