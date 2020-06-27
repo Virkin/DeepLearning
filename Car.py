@@ -31,3 +31,6 @@ class Car :
 		else :
 			pass
 
+	def updateScore(self) :
+		self.logic.score += abs(self.graph.graphic_lastX - self.graph.graphic_x) + abs(self.graph.graphic_lastY - self.graph.graphic_y)
+

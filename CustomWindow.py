@@ -1,6 +1,6 @@
 from Car import Car
 from Window import Window
-
+from GeneticAlgorithm import GeneticAlgorithm as Ga
 import sys
 import time
 
@@ -10,14 +10,6 @@ from PyQt5.QtCore import *
 from RotateRect import *
 
 nbCar = 5
-
-def transformsCarsToPop(carList):
-    pop = {}
-
-    for car in carList :
-        pop[car.id] = [car.getNetworkLinkWeights(),car.score]
-
-    return pop
 
 class CustomWindow(Window):
     def __init__(self, title, x, y, width, height):
@@ -60,22 +52,33 @@ class CustomWindow(Window):
         self.draw()
 
     def runLearning(self) :
-   
-        allStop = False
-        while not allStop :
+
+        nbGeneration = 1
+
+        while True :
             allStop = False
-            for car in self.cars :
-                car.graph.saveLast()
-                car.run()
-                if not car.graph.collides(QColor('black')) :
-                    allStop = False
-            
-            self.updateCanvas()
-        #ga = Ga(transformsCarsToPop(carList))
+            while not allStop :
+                allStop = True
+                for car in self.cars :
+                    car.graph.saveLast()
+                    car.run()
+                    if not car.graph.collides(QColor('black')) :
+                        allStop = False
 
-        #carList = ga.run()
+                    car.updateScore()
+                
+                self.updateCanvas()
+                
+            print("all crash")
 
-        #nbGénération += 1
+            self.clear()
+
+            ga = Ga(self.cars)
+
+            self.cars = ga.run()
+            self.draw()
+
+            nbGeneration += 1
 
     def setMovingZone(self):
         self.pixmap = QPixmap(self.width() * 0.85, self.height() * 1)
@@ -86,6 +89,10 @@ class CustomWindow(Window):
         self.canvas.setAlignment(Qt.AlignCenter)
 
         self.setMap()
+
+    def clear(self):
+        for car in self.cars:
+            car.graph.clear(painter=self.getPainter())
 
     def draw(self):
         for car in self.cars:

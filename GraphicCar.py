@@ -57,6 +57,13 @@ class GraphicCar(object):
         painter.end()
         self.saveLast()
 
+    def clear(self, painter) :
+        self._drawCar(x=self.graphic_lastX, y=self.graphic_lastY,
+                      w=self.graphic_lastW, h=self.graphic_lastH, a=self.graphic_lastA, painter=painter, color=QColor('white'), frontColor=QColor('white'))
+
+        self._drawCar(x=self.graphic_x, y=self.graphic_y,
+                      w=self.graphic_w, h=self.graphic_h, a=self.graphic_a, painter=painter, color=QColor('white'), frontColor=QColor('white'))
+
     def collides(self, color):
         startX = self.graphic_lastX
         endX = self.graphic_x
