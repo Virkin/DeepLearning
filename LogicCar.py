@@ -20,7 +20,7 @@ class LogicCar :
 	def predictNextConf(self, sensorValue) :
 		output = self.ann.getPrediction(sensorValue)
 		self.speed = output[0][0]*50
-		self.turn = 2*output[0][1]-1
+		self.turn = output[0][1]-0.5
 
 	def getScore(self) :
 		return self.score

@@ -163,6 +163,8 @@ class CustomWindow(Window):
         self.setVWall(painter, 0, 0, hmax, thickness)
         self.setVWall(painter, wmax - thickness, 0, hmax, thickness)
 
+        
+
         w = 150
         h = thickness
         self.setVWall(painter, w, h, 100, thickness)
@@ -201,5 +203,12 @@ class CustomWindow(Window):
         h += 80
         self.setHWall(painter, w, h, 250, thickness, 25)
         self.setHWall(painter, w, h+90, 250, thickness, 25)
+
+
+        painter.setBrush(QBrush(Qt.red, Qt.SolidPattern))
+
+        #r1 = QRect(400, 400, 100, 100)
+        #painter.drawRect(100, 15, 400,200)
+        painter.drawArc(400,400,100,100, 300, 800)
 
         painter.end()
