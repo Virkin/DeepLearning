@@ -11,6 +11,7 @@ from RotateRect import *
 
 nbCar = 5
 
+
 class CustomWindow(Window):
     def __init__(self, title, x, y, width, height):
         super().__init__(title, x, y, width, height)
@@ -45,30 +46,30 @@ class CustomWindow(Window):
 
         self.cars = []
 
-        for i in range(nbCar) :
+        for i in range(nbCar):
             self.cars.append(Car(carW, carH, self.canvas, 75, 60))
             self.cars[i].graph.graphic_a = 180
 
         self.draw()
 
-    def runLearning(self) :
+    def runLearning(self):
 
         nbGeneration = 1
 
-        while True :
+        while True:
             allStop = False
-            while not allStop :
+            while not allStop:
                 allStop = True
-                for car in self.cars :
+                for car in self.cars:
                     car.graph.saveLast()
                     car.run()
-                    if not car.graph.collides(QColor('black')) :
+                    if not car.graph.collides(QColor('black')):
                         allStop = False
 
                     car.updateScore()
-                
+
                 self.updateCanvas()
-                
+
             print("all crash")
 
             self.clear()
@@ -162,15 +163,13 @@ class CustomWindow(Window):
     def setMap(self):
         wmax = self.width() * 0.85
         hmax = self.height()
-        thickness = 10
+        thickness = 18
         painter = self.getPainter()
 
         self.setHWall(painter, 0, 0, wmax, thickness)
         self.setHWall(painter, 0, hmax - thickness, wmax, thickness)
         self.setVWall(painter, 0, 0, hmax, thickness)
         self.setVWall(painter, wmax - thickness, 0, hmax, thickness)
-
-        
 
         w = 150
         h = thickness
@@ -211,11 +210,10 @@ class CustomWindow(Window):
         self.setHWall(painter, w, h, 250, thickness, 25)
         self.setHWall(painter, w, h+90, 250, thickness, 25)
 
-
         painter.setBrush(QBrush(Qt.red, Qt.SolidPattern))
 
         #r1 = QRect(400, 400, 100, 100)
         #painter.drawRect(100, 15, 400,200)
-        painter.drawArc(400,400,100,100, 300, 800)
+        painter.drawArc(400, 400, 100, 100, 300, 800)
 
         painter.end()
