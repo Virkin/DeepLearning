@@ -4,7 +4,7 @@ from RotateRect import RotateRect
 from Sensor import GraphicSensor
 
 class GraphicCar(object):
-    def __init__(self, baseWidth, baseHeight, canvas, x=400, y=300):
+    def __init__(self, baseWidth, baseHeight, canvas,x ,y):
         self.graphic_x = x
         self.graphic_y = y
 
@@ -31,22 +31,23 @@ class GraphicCar(object):
                           w=w, h=h, a=0+a, painter=painter, color=color, debug=False)
 
         sensorWidth = 4
-        gs3 = GraphicSensor.create(sensorWidth, x, y - h/2 +
+        self.gs3 = GraphicSensor.create(sensorWidth, x, y - h/2 +
                                    sensorWidth/2, x, y, a, -90, painter, self.canvas, frontColor)
 
-        gs4 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
+        self.gs4 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
                                    sensorWidth/2, x, y, a, -45, painter, self.canvas, frontColor)
-        gs5 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
+        self.gs5 = GraphicSensor.create(sensorWidth, x + w/2 - sensorWidth/2, y - h/2 +
                                    sensorWidth*1.5, x, y, a, 0, painter, self.canvas, frontColor)
 
-        gs2 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
+        self.gs2 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
                                    sensorWidth/2, x, y, a, 225, painter, self.canvas, frontColor)
-        gs1 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
+        self.gs1 = GraphicSensor.create(sensorWidth, x - w/2 + sensorWidth/2, y - h/2 +
                                    sensorWidth*1.5, x, y, a, 180, painter, self.canvas, frontColor)
 
-        print("{}|{}|{}|{}|{}".format(gs1.Dist(), gs2.Dist(),
-                                      gs3.Dist(), gs4.Dist(), gs5.Dist()))
         return
+
+    def getSensor(self) :
+        return [self.gs1.Dist(), self.gs2.Dist(), self.gs3.Dist(), self.gs4.Dist(), self.gs5.Dist()]
 
     def draw(self, painter, color=QColor('red')):
         self._drawCar(x=self.graphic_lastX, y=self.graphic_lastY,

@@ -9,7 +9,15 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from RotateRect import *
 
-nbCar = 1
+nbCar = 5
+
+def transformsCarsToPop(carList):
+    pop = {}
+
+    for car in carList :
+        pop[car.id] = [car.getNetworkLinkWeights(),car.score]
+
+    return pop
 
 class CustomWindow(Window):
     def __init__(self, title, x, y, width, height):
@@ -24,7 +32,12 @@ class CustomWindow(Window):
         self.testButton.setText("Test")
         self.testButton.clicked.connect(self.testButtonClicked)
 
+        self.learnButton = QPushButton()
+        self.learnButton.setText("Learn")
+        self.learnButton.clicked.connect(self.runLearning)
+
         self.managementVBoxLayout.addWidget(self.testButton)
+        self.managementVBoxLayout.addWidget(self.learnButton)
 
         self.mainHBoxLayout.addLayout(self.managementVBoxLayout)
         self.mainHBoxLayout.addWidget(self.canvas)
@@ -45,6 +58,24 @@ class CustomWindow(Window):
             self.cars[i].graph.graphic_a = 180
 
         self.draw()
+
+    def runLearning(self) :
+   
+        allStop = False
+        while not allStop :
+            allStop = False
+            for car in self.cars :
+                car.graph.saveLast()
+                car.run()
+                if not car.graph.collides(QColor('black')) :
+                    allStop = False
+            
+            self.updateCanvas()
+        #ga = Ga(transformsCarsToPop(carList))
+
+        #carList = ga.run()
+
+        #nbGénération += 1
 
     def setMovingZone(self):
         self.pixmap = QPixmap(self.width() * 0.85, self.height() * 1)

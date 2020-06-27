@@ -5,7 +5,7 @@ class GeneticAlgorithm :
 	pCo = 0.8
 	pM = 0.2
 
-	nbParents = 2
+	nbParents = 1
 
 	def __init__(self, pop) :
 		self.pop = pop

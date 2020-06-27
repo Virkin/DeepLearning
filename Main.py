@@ -5,13 +5,7 @@ nbCar = 20
 def runSimu(carList) :
 	return carList
 
-def transformsCarsToPop(carList):
-	pop = {}
 
-	for car in carList :
-		pop[car.id] = [car.getNetworkLinkWeights(),car.score]
-
-	return pop
 
 if __name__ == "__main__":
 	
