@@ -10,7 +10,7 @@ def runSimu(carList) :
 if __name__ == "__main__":
 	
 	carList = []
-	nbGénération = 1
+	nbGénération = 5
 
 	for i in range(nbCar) :
 			carList.append(Car(i))

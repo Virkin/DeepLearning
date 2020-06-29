@@ -12,8 +12,25 @@ class Car :
 
 	def run(self) :
 		if not self.graph.collides(QColor('black')):
-			self.logic.predictNextConf(self.graph.getSensor())
-			
+			#print(self.graph.getSensor())
+
+			val = self.logic.predictNextConf(self.graph.getSensor())
+
+			if val < 0.25 :
+				retVal = self.graph.moveLeft()
+			elif val >= 0.25 and val < 0.5 :
+				retVal = self.graph.moveUp()
+			elif val >= 0.5 and val < 0.75:
+				retVal = self.graph.moveRight()
+			else :
+				retVal = self.graph.moveDown()
+
+			oldScore = self.logic.score
+
+			self.updateScore()
+
+			return retVal
+			"""
 			aRad = math.radians(self.graph.graphic_a+90)+self.logic.turn
 
 			self.graph.graphic_x += round(math.cos(aRad)*self.logic.speed).astype(int)
@@ -27,9 +44,9 @@ class Car :
 
 			self.graph.graphic_a = math.degrees(aRad - math.pi/2)
 
-			print("id:{} / x : {}/y : {}\n".format(self.logic.id, self.graph.graphic_x, self.graph.graphic_y))
+			print("id:{} / x : {}/y : {}\n".format(self.logic.id, self.graph.graphic_x, self.graph.graphic_y))"""
 		else :
-			pass
+			return False
 
 	def updateScore(self) :
 		self.logic.score += abs(self.graph.graphic_lastX - self.graph.graphic_x) + abs(self.graph.graphic_lastY - self.graph.graphic_y)

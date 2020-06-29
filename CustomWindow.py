@@ -9,8 +9,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from RotateRect import *
 
-nbCar = 5
-
+nbCar = 20
 
 class CustomWindow(Window):
     def __init__(self, title, x, y, width, height):
@@ -41,43 +40,50 @@ class CustomWindow(Window):
         self.testAngle = 0
 
         self.one = False
-        carW = 5
-        carH = 15
+        carW = 3
+        carH = 10
 
         self.cars = []
+        self.genCars = []
 
         for i in range(nbCar):
-            self.cars.append(Car(carW, carH, self.canvas, 75, 60))
-            self.cars[i].graph.graphic_a = 180
+            self.genCars.append(Car(carW, carH, self.canvas, 75, 60))
+            self.genCars[i].graph.graphic_a = 180
 
         self.draw()
 
     def runLearning(self):
 
+        maxGeneration = 20
         nbGeneration = 1
 
-        while True:
-            allStop = False
-            while not allStop:
-                allStop = True
-                for car in self.cars:
-                    car.graph.saveLast()
-                    car.run()
-                    if not car.graph.collides(QColor('black')):
-                        allStop = False
-
-                    car.updateScore()
-
+        while nbGeneration <= maxGeneration:
+            for car in self.genCars:
+                
+                self.cars.append(car)
                 self.updateCanvas()
+                
+                crash = False
+                while not crash :
+                    car.graph.saveLast()
+                    retVal = car.run()
+                    if not retVal :
+                        crash = True
+
+                    self.updateCanvas()
+
+                self.cars.remove(car)
 
             print("all crash")
 
+            self.cars = self.genCars.copy()
             self.clear()
+            self.cars.clear()
 
-            ga = Ga(self.cars)
+            ga = Ga(self.genCars)
 
-            self.cars = ga.run()
-            self.draw()
+            self.genCars = ga.run()
+            self.updateCanvas()
 
             nbGeneration += 1
 
@@ -110,6 +116,7 @@ class CustomWindow(Window):
 
             for car in self.cars:
                 car.graph.graphic_a = angle
+                print(car.graph.getSensor())
 
             self.updateCanvas()
             time.sleep(0.01)
@@ -183,12 +190,12 @@ class CustomWindow(Window):
         w -= 20
         h += 195
         self.setVWall(painter, w, h, 200, thickness)
-        h += 220
-        self.setHWall(painter, w, h, 200, thickness, 15)
+        h += 200
+        self.setHWall(painter, w, h, 200, thickness, 0)
 
         w += 190
         h -= 460
-        self.setVWall(painter, w, h, 500, thickness, 2)
+        self.setVWall(painter, w, h, 470, thickness, 2)
         w += 20
         h -= 180
         self.setVWall(painter, w, h, 200, thickness, 10)
@@ -209,11 +216,5 @@ class CustomWindow(Window):
         h += 80
         self.setHWall(painter, w, h, 250, thickness, 25)
         self.setHWall(painter, w, h+90, 250, thickness, 25)
-
-        painter.setBrush(QBrush(Qt.red, Qt.SolidPattern))
-
-        #r1 = QRect(400, 400, 100, 100)
-        #painter.drawRect(100, 15, 400,200)
-        painter.drawArc(400, 400, 100, 100, 300, 800)
 
         painter.end()

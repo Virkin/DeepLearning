@@ -46,7 +46,7 @@ class GraphicSensor(Sensor):
 
         self.debug = False
 
-        self.dmax = 100
+        self.dmax = 200
 
     def angle(self, a, cx, cy):
         self.a = a

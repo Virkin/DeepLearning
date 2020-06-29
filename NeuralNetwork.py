@@ -9,8 +9,8 @@ class NeuralNetwork :
 
 		self.model = Sequential()
 		self.model.add(Dense(4, input_dim=5, activation='sigmoid'))
-		self.model.add(Dense(3, activation='sigmoid'))
-		self.model.add(Dense(2, activation='sigmoid'))
+		self.model.add(Dense(4, activation='relu'))
+		self.model.add(Dense(1, activation='sigmoid'))
 
 		#Output : Speed and Turn
 

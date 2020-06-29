@@ -15,6 +15,8 @@ class GraphicCar(object):
 
         self.canvas = canvas
 
+        self.lastMove = None
+
         self.side = True
 
         self.saveLast()
@@ -133,39 +135,55 @@ class GraphicCar(object):
     def moveUp(self):
         self.move()
         self.graphic_y -= 10
-        if self.collides(QColor('black')):
+        if self.collides(QColor('black')) or self.lastMove == "down":
             self.graphic_y += 10
-            return
+            return False
+
+        self.lastMove = "up"
 
         self.graphic_a = 0
         self.side = False
 
+        return True
+
     def moveLeft(self):
         self.move()
         self.graphic_x -= 10
-        if self.collides(QColor('black')):
+        if self.collides(QColor('black')) or self.lastMove == "right":
             self.graphic_x += 10
-            return
+            return False
+
+        self.lastMove = "left"
 
         self.graphic_a = -90
         self.side = True
 
+        return True
+
     def moveDown(self):
         self.move()
         self.graphic_y += 10
-        if self.collides(QColor('black')):
+        if self.collides(QColor('black')) or self.lastMove == "up":
             self.graphic_y -= 10
-            return
+            return False
+
+        self.lastMove = "down"
 
         self.graphic_a = 180
         self.side = False
 
+        return True
+
     def moveRight(self):
         self.move()
         self.graphic_x += 10
-        if self.collides(QColor('black')):
+        if self.collides(QColor('black')) or self.lastMove == "left":
             self.graphic_x -= 10
-            return
+            return False
+
+        self.lastMove = "right"
 
         self.graphic_a = 90
         self.side = True
+
+        return True

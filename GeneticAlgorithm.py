@@ -2,8 +2,8 @@ import random
 from Car import Car
 
 class GeneticAlgorithm :
-	pCo = 0.8
-	pM = 0.2
+	pCo = 0.7
+	pM = 1
 
 	nbParents = 2
 
@@ -80,7 +80,7 @@ class GeneticAlgorithm :
 
 	def mutation(self, indiv) :
 
-		nbMutation = 5
+		nbMutation = 20
 
 		weights = indiv.logic.getNetworkLinkWeights()
 
@@ -92,7 +92,7 @@ class GeneticAlgorithm :
 
 			offset = random.randint(1,2)
 
-			weights[layer][link] += 0.05*pow(-1,offset)
+			weights[layer][link] += 0.2*pow(-1,offset)
 
 		indiv.logic.setNetworkLinkWeights(weights)
 
